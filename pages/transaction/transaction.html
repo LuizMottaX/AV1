@@ -26,7 +26,7 @@
             </div>
             <div class="form-field">
                 <div><label>Moeda *</label></div>
-                <select>
+                <select id="currency">
                     <option value="USD">Dólar</option>
                     <option value="EUR">Euro</option>
                     <option value="BRL" selected>Real</option>
@@ -58,7 +58,7 @@
                 <div><label>Descrição</label></div>
                 <input type="text">
             </div>
-            <button type="button" class="solid" disabled id="save-button">Salvar</button>
+            <button type="button" class="solid" disabled id="save-button" onclick="saveTransaction()">Salvar</button>
             <button type="button" class="clear">Cancelar</button>
         </form>
     </main>

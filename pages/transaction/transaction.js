@@ -1,3 +1,16 @@
+function saveTransaction() {
+    const transaction = {
+        type: form.typeExpense().checked ? "expense" : "income",
+        date: form.date().value,
+        money: {
+            currency: form.currency().value,
+            value: form.value().value
+        },
+        transactionType: form.transactionType().value,
+        description: form.description().value
+    }
+}
+
 function onChangeDate() {
     const date = form.date().value;
     form.dateRequiredError().style.display = !date ? "block" : "none";
@@ -46,11 +59,14 @@ function isFormValid() {
 }
 
 const form = {
+    currency: () => document.getElementById('currency'),
     date: () => document.getElementById('date'),
+    description: () => document.getElementById('description'),
     dateRequiredError: () => document.getElementById('date-required-error'),
     saveButton: () => document.getElementById('save-button'),
     transactionType: () => document.getElementById('transaction-type'),
     transactionTypeRequiredError: () => document.getElementById('transaction-type-required-error'),
+    typeExpense: () => document.getElementById('expense'),
     value: () => document.getElementById('value'),
     valueRequiredError: () => document.getElementById('value-required-error'),
     valueLessOrEqualToZeroError: () => document.getElementById('value-less-or-equal-to-zero-error')
