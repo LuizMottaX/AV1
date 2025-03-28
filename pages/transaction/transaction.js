@@ -1,5 +1,23 @@
 function saveTransaction() {
-    const transaction = {
+    showLoading();
+
+    const transaction = createTransaction();
+
+    firebase.firestore()
+        .collection('transactions')
+        .add(transaction)
+        .then(() => {
+            hideLoading();
+            window.location.href = "../home/home.html";
+        })
+        .catch(() => {
+            hideLoading();
+            alert('Erro ao salvar transação');
+        })
+}
+
+function createTransaction() {
+    return {
         type: form.typeExpense().checked ? "expense" : "income",
         date: form.date().value,
         money: {
@@ -7,8 +25,11 @@ function saveTransaction() {
             value: form.value().value
         },
         transactionType: form.transactionType().value,
-        description: form.description().value
-    }
+        description: form.description().value,
+        user: {
+            uid: firebase.auth().currentUser.uid
+        }
+    };
 }
 
 function onChangeDate() {

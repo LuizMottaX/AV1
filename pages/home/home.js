@@ -19,14 +19,17 @@ function newTransaction() {
 }
 
 function findTransactions(user) {
+    showLoading();
     firebase.firestore()
         .collection('transactions')
         .where('user.uid', '==', user.uid)
         .orderBy('date', 'desc')
         .get()
         .then(snapshot => {
-            const transactions = snapshot.docs.map(doc => doc.data());
-            console.log(transactions)
+            hideLoading();
+            const transactions = snapshot.docs.map(doc => ({
+                ...doc.data()),
+                uid: doc.id
             addTransactionsToScreen(transactions);
         })
 }
@@ -37,6 +40,9 @@ function addTransactionsToScreen(transactions) {
     transactions.forEach(transaction => {
         const li = document.createElement('li');
         li.classList.add(transaction.type);
+        li.addEventListener('click', () => {
+            window.location.href = "../transaction/transaction.html?" + transaction.uid;
+        })
 
         const date = document.createElement('p');
         date.innerHTML = formatDate(transaction.date);
